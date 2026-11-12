@@ -11322,7 +11322,7 @@ header.masthead {
   overflow: hidden;
   padding-top: calc(7rem + 72px);
   padding-bottom: 7rem;
-  background: linear-gradient(0deg, #027368 0%, #BFAC95 100%);
+  background: linear-gradient(135deg, #02554d 0%, #12324f 100%);
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: scroll;
@@ -11342,7 +11342,7 @@ header.masthead .bg-circle {
   z-index: 0;
   position: absolute;
   border-radius: 100%;
-  background: linear-gradient(0deg, #027368 0%, #BFB6AE 100%);
+  background: linear-gradient(135deg, rgba(2, 115, 104, 0.4) 0%, rgba(18, 50, 79, 0.4) 100%);
 }
 header.masthead .bg-circle-1 {
   height: 90rem;
@@ -11386,9 +11386,29 @@ header.masthead .bg-circle-4 {
 
 #btn-back-to-top {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
   display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1040;
+}
+
+#btn-back-to-top svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Ensure focus visibility for keyboard users */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid #0dcaf0 !important;
+  outline-offset: 2px !important;
 }
 
 /* Hiding content */
