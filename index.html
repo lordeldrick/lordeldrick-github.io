@@ -16,6 +16,9 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
+        <!-- Skip link for keyboard accessibility -->
+        <a class="visually-hidden-focusable btn btn-primary position-absolute top-0 start-0 m-2 z-index-top" href="#main-content">Skip to main content</a>
+
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
             <div class="container px-5">
@@ -35,12 +38,12 @@
 
         <!-- Go to top button -->
         <button
-            type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
-            <i class="fas fa-arrow-up"></i>
+            type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top" aria-label="Back to top of page">
+            <i class="fas fa-arrow-up" aria-hidden="true"></i>
         </button>
 
         <!-- Header-->
-        <header class="masthead text-center text-white">
+        <header id="main-content" class="masthead text-center text-white">
             <div class="masthead-content">
                 <div class="container px-5">
                     <h1 class="masthead-heading mb-0">Hannah Watts Music</h1>
@@ -59,7 +62,7 @@
             <div class="container px-5">
                 <div class="row gx-5 align-items-center">
                     <div class="col-lg-6 order-lg-2">
-                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/01.jpg" alt="..." /></div>
+                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/01.jpg" alt="Hannah Watts smiling at the piano" /></div>
                     </div>
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-5">
@@ -119,7 +122,7 @@
             <div class="container px-5">
                 <div class="row gx-5 align-items-center">
                     <div class="col-lg-6">
-                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/02.jpg" alt="..." /></div>
+                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/02.jpg" alt="Hannah Watts with students celebrating music achievements" /></div>
                     </div>
                     <div class="col-lg-6">
                         <div class="p-5">
@@ -164,7 +167,7 @@
                                 Fern Elder, Student
                             </cite>
                         </figcaption>
-                    </div>
+                    </figure>
                 </div>
             </div>
         </div>
@@ -178,7 +181,7 @@
             <div class="container px-5">
                 <div class="row gx-5 align-items-center">
                     <div class="col-lg-6 order-lg-2">
-                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/03.jpg" alt="..." /></div>
+                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/03.jpg" alt="Hannah Watts accompanying a choir on the piano" /></div>
                     </div>
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-5">
@@ -197,7 +200,7 @@
                     <p>Here is Hannah playing a beautiful piece of music.</p>
                     <p>Enjoy.</p>
                     <div style="position: relative; width: 100%; padding-top: 56.25%;">
-                        <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fhannahwattsmusic%2Fvideos%2F2066845383547323%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden; width:100%; height:100%; position:absolute; top:0; left:0;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+                        <iframe title="Hannah Watts playing piano video" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fhannahwattsmusic%2Fvideos%2F2066845383547323%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden; width:100%; height:100%; position:absolute; top:0; left:0;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
                     </div>
                 </div>
             </div>
@@ -235,7 +238,7 @@
                                 Ruth Bell, Parent
                             </cite>
                         </figcaption>
-                    </div>
+                    </figure>
                 </div>
                 <div class="col-sm">
                     <figure class="text-center shadow">
@@ -263,15 +266,15 @@
             <div class="container px-5">
                 <div class="row gx-5 align-items-center">
                     <div class="col-lg-6">
-                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/04.jpg" alt="..." /></div>
+                        <div class="p-5"><img class="img-fluid rounded-circle" src="assets/img/04.jpg" alt="Hannah Watts offering friendly music tuition" /></div>
                     </div>
                     <div class="col-lg-6">
                         <div class="p-5">
                             <h2 class="display-4">Contacting me</h2>
                             <ul>
-                                <li>Email: <a href="mailto:info@hannahwattsmusic.co.uk">info@hannahwatts.co.uk</a></li>
+                                <li>Email: <a href="mailto:info@hannahwattsmusic.co.uk">info@hannahwattsmusic.co.uk</a></li>
                                 <li>Telephone: <a href="tel:+447513885245">07513 885245 (Call or Text)</a></li>
-                                <li>Social Media: <a href="https://www.facebook.com/hannahwattsmusic" target="_blank">Facebook page</a></li>
+                                <li>Social Media: <a href="https://www.facebook.com/hannahwattsmusic" target="_blank" rel="noopener noreferrer" aria-label="Visit Hannah Watts Music on Facebook (opens in a new tab)">Facebook page</a></li>
                             </ul>
                         </div>
                     </div>
