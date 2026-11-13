@@ -107,14 +107,19 @@
     }
   }
 
-  // Note Frequencies (C Major Diatonic Octave): C4, D4, E4, F4, G4, A4, B4, C5
+  // Note Frequencies (Full C4 to C5 Chromatic Octave: Naturals & Sharps)
   const noteFrequencies = {
     'C': 261.63,
+    'C#': 277.18,
     'D': 293.66,
+    'D#': 311.13,
     'E': 329.63,
     'F': 349.23,
+    'F#': 369.99,
     'G': 392.00,
+    'G#': 415.30,
     'A': 440.00,
+    'A#': 466.16,
     'B': 493.88,
     'C5': 523.25
   };
@@ -143,7 +148,7 @@
     osc.stop(now + 1.2);
   }
 
-  const pianoKeys = document.querySelectorAll('.piano-key');
+  const pianoKeys = document.querySelectorAll('.piano-key, .piano-key-sharp');
   pianoKeys.forEach((key) => {
     const note = key.getAttribute('data-note');
     const freq = noteFrequencies[note];
@@ -163,17 +168,21 @@
     });
   });
 
-  // Keyboard shortcut listener (Keys 1-8 or C-C)
+  // Keyboard shortcut listener (Natural keys 1-8, Sharps Q, W, E, R, T or standard keys)
   const keyMap = {
     '1': 'C', 'c': 'C',
+    'q': 'C#',
     '2': 'D', 'd': 'D',
+    'w': 'D#',
     '3': 'E', 'e': 'E',
     '4': 'F', 'f': 'F',
+    'r': 'F#',
     '5': 'G', 'g': 'G',
+    't': 'G#',
     '6': 'A', 'a': 'A',
+    'y': 'A#',
     '7': 'B', 'b': 'B',
-    '8': 'C5', 'c5': 'C5',
-    'k': 'C5', 'i': 'B'
+    '8': 'C5', 'c5': 'C5'
   };
 
   window.addEventListener('keydown', (e) => {
@@ -183,7 +192,7 @@
     }
     const note = keyMap[e.key.toLowerCase()];
     if (note && noteFrequencies[note]) {
-      const keyElem = document.querySelector(`.piano-key[data-note="${note}"]`);
+      const keyElem = document.querySelector(`[data-note="${note}"]`);
       if (keyElem) {
         keyElem.classList.add('active');
         playTone(noteFrequencies[note]);
