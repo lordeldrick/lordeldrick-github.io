@@ -208,62 +208,90 @@
                         Play a full chromatic octave including natural &amp; <strong>sharp (#)</strong> notes. Click, tap, or press keys <kbd>1</kbd>–<kbd>8</kbd> for white keys and <kbd>Q</kbd>, <kbd>W</kbd>, <kbd>R</kbd>, <kbd>T</kbd>, <kbd>Y</kbd> for black keys.
                     </p>
                     <div class="piano-keys-wrapper">
-                        <div class="piano-keys" role="group" aria-label="Interactive piano keyboard with natural and sharp keys">
-                            <!-- White Keys -->
-                            <button type="button" class="piano-key" data-note="C" aria-label="Play natural note C4">
-                                <span class="piano-key-note">C</span>
-                                <span class="piano-key-kbd">1</span>
-                            </button>
-                            <button type="button" class="piano-key" data-note="D" aria-label="Play natural note D4">
-                                <span class="piano-key-note">D</span>
-                                <span class="piano-key-kbd">2</span>
-                            </button>
-                            <button type="button" class="piano-key" data-note="E" aria-label="Play natural note E4">
-                                <span class="piano-key-note">E</span>
-                                <span class="piano-key-kbd">3</span>
-                            </button>
-                            <button type="button" class="piano-key" data-note="F" aria-label="Play natural note F4">
-                                <span class="piano-key-note">F</span>
-                                <span class="piano-key-kbd">4</span>
-                            </button>
-                            <button type="button" class="piano-key" data-note="G" aria-label="Play natural note G4">
-                                <span class="piano-key-note">G</span>
-                                <span class="piano-key-kbd">5</span>
-                            </button>
-                            <button type="button" class="piano-key" data-note="A" aria-label="Play natural note A4">
-                                <span class="piano-key-note">A</span>
-                                <span class="piano-key-kbd">6</span>
-                            </button>
-                            <button type="button" class="piano-key" data-note="B" aria-label="Play natural note B4">
-                                <span class="piano-key-note">B</span>
-                                <span class="piano-key-kbd">7</span>
-                            </button>
-                            <button type="button" class="piano-key" data-note="C5" aria-label="Play natural note C5">
-                                <span class="piano-key-note">C'</span>
-                                <span class="piano-key-kbd">8</span>
-                            </button>
+                        <div class="piano-keyboard" role="group" aria-label="Acoustic piano keyboard layout with natural white and sharp black keys">
+                            <!-- C4 -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="C" aria-label="Play natural note C4">
+                                    <span class="piano-key-note">C</span>
+                                    <span class="piano-key-kbd">1</span>
+                                </button>
+                                <button type="button" class="piano-key-sharp" data-note="C#" aria-label="Play sharp note C sharp 4">
+                                    <span class="piano-key-note">C♯</span>
+                                    <span class="piano-key-kbd">Q</span>
+                                </button>
+                            </div>
 
-                            <!-- Black / Sharp Keys -->
-                            <button type="button" class="piano-key-sharp sharp-c-sharp" data-note="C#" aria-label="Play sharp note C sharp 4">
-                                <span class="piano-key-note">C♯</span>
-                                <span class="piano-key-kbd">Q</span>
-                            </button>
-                            <button type="button" class="piano-key-sharp sharp-d-sharp" data-note="D#" aria-label="Play sharp note D sharp 4">
-                                <span class="piano-key-note">D♯</span>
-                                <span class="piano-key-kbd">W</span>
-                            </button>
-                            <button type="button" class="piano-key-sharp sharp-f-sharp" data-note="F#" aria-label="Play sharp note F sharp 4">
-                                <span class="piano-key-note">F♯</span>
-                                <span class="piano-key-kbd">R</span>
-                            </button>
-                            <button type="button" class="piano-key-sharp sharp-g-sharp" data-note="G#" aria-label="Play sharp note G sharp 4">
-                                <span class="piano-key-note">G♯</span>
-                                <span class="piano-key-kbd">T</span>
-                            </button>
-                            <button type="button" class="piano-key-sharp sharp-a-sharp" data-note="A#" aria-label="Play sharp note A sharp 4">
-                                <span class="piano-key-note">A♯</span>
-                                <span class="piano-key-kbd">Y</span>
-                            </button>
+                            <!-- D4 -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="D" aria-label="Play natural note D4">
+                                    <span class="piano-key-note">D</span>
+                                    <span class="piano-key-kbd">2</span>
+                                </button>
+                                <button type="button" class="piano-key-sharp" data-note="D#" aria-label="Play sharp note D sharp 4">
+                                    <span class="piano-key-note">D♯</span>
+                                    <span class="piano-key-kbd">W</span>
+                                </button>
+                            </div>
+
+                            <!-- E4 (No sharp between E and F) -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="E" aria-label="Play natural note E4">
+                                    <span class="piano-key-note">E</span>
+                                    <span class="piano-key-kbd">3</span>
+                                </button>
+                            </div>
+
+                            <!-- F4 -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="F" aria-label="Play natural note F4">
+                                    <span class="piano-key-note">F</span>
+                                    <span class="piano-key-kbd">4</span>
+                                </button>
+                                <button type="button" class="piano-key-sharp" data-note="F#" aria-label="Play sharp note F sharp 4">
+                                    <span class="piano-key-note">F♯</span>
+                                    <span class="piano-key-kbd">R</span>
+                                </button>
+                            </div>
+
+                            <!-- G4 -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="G" aria-label="Play natural note G4">
+                                    <span class="piano-key-note">G</span>
+                                    <span class="piano-key-kbd">5</span>
+                                </button>
+                                <button type="button" class="piano-key-sharp" data-note="G#" aria-label="Play sharp note G sharp 4">
+                                    <span class="piano-key-note">G♯</span>
+                                    <span class="piano-key-kbd">T</span>
+                                </button>
+                            </div>
+
+                            <!-- A4 -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="A" aria-label="Play natural note A4">
+                                    <span class="piano-key-note">A</span>
+                                    <span class="piano-key-kbd">6</span>
+                                </button>
+                                <button type="button" class="piano-key-sharp" data-note="A#" aria-label="Play sharp note A sharp 4">
+                                    <span class="piano-key-note">A♯</span>
+                                    <span class="piano-key-kbd">Y</span>
+                                </button>
+                            </div>
+
+                            <!-- B4 (No sharp between B and C) -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="B" aria-label="Play natural note B4">
+                                    <span class="piano-key-note">B</span>
+                                    <span class="piano-key-kbd">7</span>
+                                </button>
+                            </div>
+
+                            <!-- C5 (Octave high C) -->
+                            <div class="piano-key-col">
+                                <button type="button" class="piano-key" data-note="C5" aria-label="Play natural note C5">
+                                    <span class="piano-key-note">C'</span>
+                                    <span class="piano-key-kbd">8</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <p class="text-muted small">Full 13-note chromatic octave synthesized with Web Audio API — zero trackers.</p>
@@ -541,6 +569,6 @@
     </footer>
 
     <!-- Modern Vanilla JS Controller with Cache-Buster -->
-    <script src="js/scripts.js?v=2.2"></script>
+    <script src="js/scripts.js?v=2.3"></script>
 </body>
 </html>

@@ -556,7 +556,7 @@
   }
 
   /* Interactive Piano Demo Widget (Web Audio API) */
-  /* Interactive Piano Widget (Chromatic: Whites & Sharps) */
+  /* Acoustic Piano Keyboard Layout */
   .piano-widget {
     background: var(--color-surface);
     border: 2px solid var(--color-border);
@@ -564,36 +564,41 @@
     padding: var(--space-lg);
     box-shadow: var(--shadow-md);
     text-align: center;
-    max-width: 720px;
+    max-width: 680px;
     margin-inline: auto;
   }
 
   .piano-keys-wrapper {
-    position: relative;
-    display: inline-block;
-    max-width: 100%;
-    overflow-x: auto;
-    padding-block: var(--space-md);
-  }
-
-  .piano-keys {
-    position: relative;
     display: flex;
     justify-content: center;
-    gap: 4px;
-    margin: 0 auto;
-    padding-bottom: 8px;
+    overflow-x: auto;
+    padding-block: var(--space-md);
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* White Keys */
-  .piano-key {
+  .piano-keyboard {
+    display: inline-flex;
     position: relative;
-    width: 60px;
+    background: #000000;
+    padding: 6px;
+    border-radius: 4px 4px 10px 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .piano-key-col {
+    position: relative;
+    display: flex;
+  }
+
+  /* Natural White Keys */
+  .piano-key {
+    width: 58px;
     min-width: 44px;
-    height: 180px;
-    background: #ffffff;
-    border: 2px solid var(--color-text-main);
-    border-radius: 0 0 8px 8px;
+    height: 190px;
+    background: linear-gradient(180deg, #f8f8f8 0%, #ffffff 85%, #eaeaea 100%);
+    border: 1px solid #c0c0c0;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -601,29 +606,31 @@
     align-items: center;
     padding-bottom: var(--space-xs);
     font-weight: 800;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.08), 1px 0 2px rgba(0,0,0,0.1);
     user-select: none;
     -webkit-user-select: none;
-    transition: transform 0.05s ease, background-color 0.1s ease;
+    transition: transform 0.05s ease, background 0.1s ease;
     z-index: 1;
   }
 
   .piano-key:active, .piano-key.active {
-    transform: translateY(4px);
-    background: var(--color-accent-bg);
+    transform: translateY(3px);
+    background: linear-gradient(180deg, #e8dfd8 0%, #f4e8e1 100%);
     border-color: var(--color-accent);
   }
 
-  /* Black / Sharp Keys */
+  /* Black Sharp Keys - Positioned Realistically Overlapping the Column Seam */
   .piano-key-sharp {
     position: absolute;
     top: 0;
-    width: 38px;
-    height: 110px;
-    background: #1a1a1a;
+    right: -17px; /* Half width overlapping the boundary between this key and next */
+    width: 34px;
+    height: 120px;
+    background: linear-gradient(180deg, #333333 0%, #151515 80%, #000000 100%);
     color: #ffffff !important;
-    border: 2px solid #000000;
-    border-radius: 0 0 6px 6px;
+    border: 1px solid #000000;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -631,44 +638,31 @@
     align-items: center;
     padding-bottom: 6px;
     font-weight: 800;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    z-index: 2;
-    transition: transform 0.05s ease, background-color 0.1s ease;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5), inset 0 -2px 3px rgba(255, 255, 255, 0.2);
+    z-index: 5;
+    transition: transform 0.05s ease, background 0.1s ease;
   }
 
   .piano-key-sharp:active, .piano-key-sharp.active {
     transform: translateY(3px);
-    background: #3a2215;
+    background: linear-gradient(180deg, #5c2c15 0%, #3a1a0b 100%);
     border-color: var(--color-accent);
   }
 
   .piano-key-sharp .piano-key-note {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #ffffff;
   }
 
   .piano-key-sharp .piano-key-kbd {
     font-size: 0.7rem;
-    background: #333333;
+    background: #222222;
     color: #ffff00;
-    border-color: #555555;
-    padding: 0 3px;
+    border: 1px solid #444444;
+    padding: 1px 3px;
+    border-radius: 3px;
+    margin-top: 2px;
   }
-
-  /* Positions for the 5 Sharps across an 8-key octave: 
-     Key index (0-based) * (60px + 4px gap) = 64px per key
-     White keys centers:
-     C(0) to D(1): 64 - 19 = 45px
-     D(1) to E(2): 128 - 19 = 109px
-     F(3) to G(4): 256 - 19 = 237px
-     G(4) to A(5): 320 - 19 = 301px
-     A(5) to B(6): 384 - 19 = 365px
-  */
-  .sharp-c-sharp { left: 45px; }
-  .sharp-d-sharp { left: 109px; }
-  .sharp-f-sharp { left: 237px; }
-  .sharp-g-sharp { left: 301px; }
-  .sharp-a-sharp { left: 365px; }
 
   .piano-key-note {
     font-size: 1.2rem;
