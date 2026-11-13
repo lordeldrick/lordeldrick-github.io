@@ -172,7 +172,8 @@
     '5': 'G', 'g': 'G',
     '6': 'A', 'a': 'A',
     '7': 'B', 'b': 'B',
-    '8': 'C5'
+    '8': 'C5', 'c5': 'C5',
+    'k': 'C5', 'i': 'B'
   };
 
   window.addEventListener('keydown', (e) => {
