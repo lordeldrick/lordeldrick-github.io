@@ -107,14 +107,16 @@
     }
   }
 
-  // Note Frequencies: C4, D4, E4, F4, G4, A4
+  // Note Frequencies (C Major Diatonic Octave): C4, D4, E4, F4, G4, A4, B4, C5
   const noteFrequencies = {
     'C': 261.63,
     'D': 293.66,
     'E': 329.63,
     'F': 349.23,
     'G': 392.00,
-    'A': 440.00
+    'A': 440.00,
+    'B': 493.88,
+    'C5': 523.25
   };
 
   function playTone(freq) {
@@ -161,14 +163,16 @@
     });
   });
 
-  // Keyboard shortcut listener (Keys 1-6 or A-H)
+  // Keyboard shortcut listener (Keys 1-8 or C-C)
   const keyMap = {
     '1': 'C', 'c': 'C',
     '2': 'D', 'd': 'D',
     '3': 'E', 'e': 'E',
     '4': 'F', 'f': 'F',
     '5': 'G', 'g': 'G',
-    '6': 'A', 'a': 'A'
+    '6': 'A', 'a': 'A',
+    '7': 'B', 'b': 'B',
+    '8': 'C5'
   };
 
   window.addEventListener('keydown', (e) => {

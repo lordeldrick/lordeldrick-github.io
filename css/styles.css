@@ -563,19 +563,22 @@
     padding: var(--space-lg);
     box-shadow: var(--shadow-md);
     text-align: center;
-    max-width: 600px;
+    max-width: 680px;
     margin-inline: auto;
   }
 
   .piano-keys {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     margin-block: var(--space-md);
+    overflow-x: auto;
+    padding-bottom: 6px;
   }
 
   .piano-key {
-    width: 64px;
+    width: 58px;
+    min-width: 44px;
     height: 160px;
     background: #ffffff;
     border: 2px solid var(--color-text-main);
