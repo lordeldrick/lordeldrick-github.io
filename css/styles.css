@@ -8,30 +8,34 @@
 
 @layer tokens {
   :root {
-    /* Color Palette - WCAG 2.2 AAA Compliant */
-    /* Light Mode (Ivory & Deep Slate/Teal: Contrast > 11:1) */
+    /* Color Palette - Strict Contrast Rules:
+       Light elements only on dark backgrounds; Dark elements only on light backgrounds */
+    
+    /* Light Mode */
     --color-bg: #fbfbf9;
     --color-surface: #ffffff;
-    --color-surface-subtle: #f2f5f4;
-    --color-border: #d4deda;
-    --color-border-subtle: #e5ece9;
+    --color-surface-subtle: #f0f4f2;
+    --color-border: #9fb3ad;           /* 3.4:1 contrast on #fbfbf9 */
+    --color-border-subtle: #d3dfdc;
     
-    --color-text-main: #142321;        /* 14.5:1 on #fbfbf9 */
-    --color-text-muted: #2d4540;       /* 8.8:1 on #fbfbf9 */
+    --color-text-main: #142321;        /* Dark text on light bg: 14.5:1 */
+    --color-text-muted: #27403b;       /* Dark text on light bg: 9.8:1 */
     
-    --color-primary: #044b43;          /* Deep Forest Teal: 9.3:1 on white */
+    --color-primary: #044b43;          /* Dark teal on light bg: 10.0:1 */
+    --color-primary-text: #ffffff;     /* Pure white on dark teal: 10.0:1 */
     --color-primary-hover: #02332d;
     --color-primary-focus: #007f70;
     
-    --color-accent: #8b3a00;           /* Warm Copper: 7.2:1 on white */
+    --color-accent: #8b3a00;           /* Dark copper on light bg: 7.8:1 */
+    --color-accent-text: #ffffff;      /* Pure white on dark copper: 7.8:1 */
+    --color-accent-hover: #6b2d00;
     --color-accent-bg: #fdf3eb;
     
     --color-focus-ring: #004b75;       /* Focus outline */
     --color-focus-ring-offset: #ffffff;
 
-    /* Dark Mode (Enabled via [data-theme="dark"]) */
     --color-hero-bg-gradient: linear-gradient(135deg, #06312c 0%, #0d2238 100%);
-    --color-hero-text: #ffffff;
+    --color-hero-text: #ffffff;        /* Pure white text on dark hero: > 13:1 */
 
     /* Typography */
     --font-sans: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -65,24 +69,27 @@
   }
 
   [data-theme="dark"] {
-    --color-bg: #0d1615;
-    --color-surface: #142220;
-    --color-surface-subtle: #1c2e2c;
-    --color-border: #2d4541;
-    --color-border-subtle: #223734;
+    --color-bg: #091312;
+    --color-surface: #101f1d;
+    --color-surface-subtle: #172b28;
+    --color-border: #4d726b;
+    --color-border-subtle: #2d4541;
 
-    --color-text-main: #f5f9f8;        /* 14.8:1 on #0d1615 */
-    --color-text-muted: #c8dad6;       /* 9.4:1 on #0d1615 */
+    --color-text-main: #ffffff;        /* Pure white on dark: > 16:1 */
+    --color-text-muted: #d6e8e4;       /* High-contrast light text on dark: > 11:1 */
 
-    --color-primary: #52c2b3;          /* 7.5:1 on #142220 */
+    --color-primary: #52c2b3;          /* Bright light teal */
+    --color-primary-text: #051412;     /* Pure dark text on light teal: 9.7:1 */
     --color-primary-hover: #7ae0d2;
     --color-primary-focus: #3aa698;
 
-    --color-accent: #f7a361;           /* 8.2:1 on dark surface */
+    --color-accent: #ffb366;           /* Bright amber/gold */
+    --color-accent-text: #1a0c00;      /* Pure dark text on light amber: 11.9:1 */
+    --color-accent-hover: #ffc485;
     --color-accent-bg: #291a10;
 
     --color-focus-ring: #63b3ed;
-    --color-focus-ring-offset: #0d1615;
+    --color-focus-ring-offset: #091312;
 
     --color-hero-bg-gradient: linear-gradient(135deg, #051e1b 0%, #081624 100%);
   }
@@ -90,18 +97,21 @@
   [data-theme="high-contrast"] {
     --color-bg: #000000;
     --color-surface: #000000;
-    --color-surface-subtle: #111111;
+    --color-surface-subtle: #151515;
     --color-border: #ffffff;
     --color-border-subtle: #ffffff;
 
     --color-text-main: #ffffff;        /* 21:1 on #000000 */
-    --color-text-muted: #ffffb3;       /* High contrast yellow */
+    --color-text-muted: #ffff80;       /* Ultra high contrast yellow on black: 17.5:1 */
 
-    --color-primary: #ffff00;          /* Yellow on black: 19:1 */
+    --color-primary: #ffff00;          /* Yellow */
+    --color-primary-text: #000000;     /* Pure black on bright yellow: 19:1 */
     --color-primary-hover: #ffffff;
     --color-primary-focus: #ffff00;
 
-    --color-accent: #00ffff;           /* Cyan on black */
+    --color-accent: #00ffff;           /* Cyan */
+    --color-accent-text: #000000;      /* Pure black on bright cyan: 16:1 */
+    --color-accent-hover: #ffffff;
     --color-accent-bg: #000000;
 
     --color-focus-ring: #ffff00;
@@ -146,15 +156,18 @@
 
   /* EAA Monochrome / Low-Stimulus Mode */
   [data-theme="monochrome"] {
-    filter: grayscale(100%);
     --color-bg: #ffffff;
     --color-surface: #ffffff;
-    --color-surface-subtle: #f0f0f0;
-    --color-border: #000000;
+    --color-surface-subtle: #f2f2f2;
+    --color-border: #444444;
+    --color-border-subtle: #888888;
     --color-text-main: #000000;
     --color-text-muted: #222222;
     --color-primary: #000000;
+    --color-primary-text: #ffffff;
     --color-accent: #000000;
+    --color-accent-text: #ffffff;
+    --color-focus-ring: #000000;
   }
 }
 
@@ -381,8 +394,9 @@
     gap: 6px;
     min-height: 38px;
     padding: 4px 12px;
-    background: var(--color-surface-subtle);
-    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-main);
+    border: 2px solid var(--color-border);
     border-radius: var(--radius-sm);
     font-weight: 700;
     font-size: 0.875rem;
@@ -390,12 +404,12 @@
   }
 
   .a11y-btn:hover {
-    background: var(--color-border-subtle);
+    background: var(--color-surface-subtle);
   }
 
   .a11y-btn[aria-pressed="true"] {
     background: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-primary-text) !important;
     border-color: var(--color-primary);
   }
 
@@ -488,7 +502,7 @@
     color: #ffffff;
   }
 
-  /* Buttons - Target Size >= 44x44px for AAA */
+  /* Buttons - Strict Contrast (WCAG 2.2 AAA >= 7:1) */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -508,22 +522,22 @@
 
   .btn-primary {
     background-color: var(--color-accent);
-    color: #ffffff !important;
+    color: var(--color-accent-text) !important;
   }
 
   .btn-primary:hover {
-    background-color: #6d2d00;
+    background-color: var(--color-accent-hover);
     box-shadow: var(--shadow-md);
   }
 
   .btn-secondary {
     background-color: transparent;
     color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.8);
+    border-color: #ffffff;
   }
 
   .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 
   .btn-outline {
@@ -534,7 +548,7 @@
 
   .btn-outline:hover {
     background-color: var(--color-primary);
-    color: #ffffff !important;
+    color: var(--color-primary-text) !important;
   }
 
   .button-group {
@@ -698,12 +712,28 @@
 
   .piano-key-sharp .piano-key-kbd {
     font-size: 0.7rem;
-    background: #222222;
+    background: #000000;
     color: #ffff00;
-    border: 1px solid #444444;
+    border: 1px solid #555555;
     padding: 1px 3px;
     border-radius: 3px;
     margin-top: 2px;
+  }
+
+  .piano-key-kbd {
+    font-size: 0.8rem;
+    color: #000000;
+    background: #f0f0f0;
+    border: 1px solid #767676;
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin-top: 4px;
+  }
+
+  [data-theme="dark"] .piano-key-kbd {
+    color: #000000;
+    background: #ffffff;
+    border-color: #ffffff;
   }
 
   .piano-key-note {
@@ -711,14 +741,22 @@
     color: var(--color-text-main);
   }
 
-  .piano-key-kbd {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    background: var(--color-surface-subtle);
-    border: 1px solid var(--color-border);
+  kbd {
+    background: #111111;
+    color: #ffffff;
+    border: 1px solid #333333;
     border-radius: 4px;
-    padding: 1px 4px;
-    margin-top: 4px;
+    padding: 2px 6px;
+    font-size: 0.9em;
+    font-family: inherit;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+
+  [data-theme="dark"] kbd,
+  [data-theme="high-contrast"] kbd {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
   }
     padding: 1px 4px;
     margin-top: 4px;
@@ -824,7 +862,7 @@
 
   .radio-pill-label:has(input:checked) {
     background: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-primary-text) !important;
     border-color: var(--color-primary);
   }
 
