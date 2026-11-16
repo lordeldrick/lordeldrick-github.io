@@ -15,17 +15,29 @@
   'use strict';
 
   // ==========================================
-  // 1. Accessibility Toolbar & State
+  // 1. Accessibility Preferences & Controller (WCAG 2.2 AAA & EAA)
   // ==========================================
   const docEl = document.documentElement;
   const themeToggle = document.getElementById('theme-toggle');
   const dyslexiaToggle = document.getElementById('dyslexia-toggle');
-  const readingGuideToggle = document.getElementById('reading-guide-toggle');
-  const readingGuide = document.getElementById('reading-guide');
+  const textSizeToggle = document.getElementById('text-size-toggle');
+  const spacingToggle = document.getElementById('spacing-toggle');
+  const motionToggle = document.getElementById('motion-toggle');
+  const a11yAnnouncer = document.getElementById('a11y-announcer');
+
+  function announce(msg) {
+    if (a11yAnnouncer) {
+      a11yAnnouncer.textContent = '';
+      setTimeout(() => { a11yAnnouncer.textContent = msg; }, 50);
+    }
+  }
 
   // Load saved preferences
   const savedTheme = localStorage.getItem('hwm_theme') || 'light';
   const savedDyslexic = localStorage.getItem('hwm_dyslexic') === 'true';
+  const savedTextSize = localStorage.getItem('hwm_text_size') || 'normal';
+  const savedSpacing = localStorage.getItem('hwm_spacing') === 'true';
+  const savedMotion = localStorage.getItem('hwm_motion') === 'reduced';
 
   if (savedTheme !== 'light') {
     docEl.setAttribute('data-theme', savedTheme);
@@ -34,10 +46,22 @@
     docEl.setAttribute('data-dyslexic', 'true');
     if (dyslexiaToggle) dyslexiaToggle.setAttribute('aria-pressed', 'true');
   }
+  if (savedTextSize !== 'normal') {
+    docEl.setAttribute('data-text-size', savedTextSize);
+    if (textSizeToggle) textSizeToggle.setAttribute('data-current', savedTextSize);
+  }
+  if (savedSpacing) {
+    docEl.setAttribute('data-text-spacing', 'expanded');
+    if (spacingToggle) spacingToggle.setAttribute('aria-pressed', 'true');
+  }
+  if (savedMotion) {
+    docEl.setAttribute('data-motion', 'reduced');
+    if (motionToggle) motionToggle.setAttribute('aria-pressed', 'true');
+  }
 
-  // Theme Cycler: Light -> Dark -> High-Contrast
+  // Theme Cycler: Light -> Dark -> High-Contrast -> Monochrome (EAA Compliant)
   if (themeToggle) {
-    const themes = ['light', 'dark', 'high-contrast'];
+    const themes = ['light', 'dark', 'high-contrast', 'monochrome'];
     themeToggle.addEventListener('click', () => {
       const current = docEl.getAttribute('data-theme') || 'light';
       const nextIdx = (themes.indexOf(current) + 1) % themes.length;
@@ -48,11 +72,13 @@
         docEl.setAttribute('data-theme', nextTheme);
       }
       localStorage.setItem('hwm_theme', nextTheme);
-      themeToggle.setAttribute('aria-label', `Theme: ${nextTheme}. Click to change`);
+      const label = `Theme: ${nextTheme}`;
+      themeToggle.setAttribute('aria-label', `${label}. Click to cycle theme`);
+      announce(`Visual theme updated to ${nextTheme}`);
     });
   }
 
-  // Dyslexia Mode Toggle
+  // Dyslexia Mode Toggle (Atkinson Hyperlegible / OpenDyslexic)
   if (dyslexiaToggle) {
     dyslexiaToggle.addEventListener('click', () => {
       const isDyslexic = docEl.getAttribute('data-dyslexic') === 'true';
@@ -60,32 +86,65 @@
         docEl.removeAttribute('data-dyslexic');
         dyslexiaToggle.setAttribute('aria-pressed', 'false');
         localStorage.setItem('hwm_dyslexic', 'false');
+        announce('Dyslexia font disabled');
       } else {
         docEl.setAttribute('data-dyslexic', 'true');
         dyslexiaToggle.setAttribute('aria-pressed', 'true');
         localStorage.setItem('hwm_dyslexic', 'true');
+        announce('Dyslexia-friendly font enabled');
       }
     });
   }
 
-  // Reading Guide / Ruler Mask Toggle
-  if (readingGuideToggle && readingGuide) {
-    let guideActive = false;
-    readingGuideToggle.addEventListener('click', () => {
-      guideActive = !guideActive;
-      readingGuide.style.display = guideActive ? 'block' : 'none';
-      readingGuideToggle.setAttribute('aria-pressed', guideActive ? 'true' : 'false');
+  // Text Sizing Cycler (SC 1.4.4 / 1.4.8: Normal -> Large +25% -> X-Large +50%)
+  if (textSizeToggle) {
+    const textSizes = ['normal', 'large', 'xlarge'];
+    textSizeToggle.addEventListener('click', () => {
+      const current = docEl.getAttribute('data-text-size') || 'normal';
+      const nextIdx = (textSizes.indexOf(current) + 1) % textSizes.length;
+      const nextSize = textSizes[nextIdx];
+      if (nextSize === 'normal') {
+        docEl.removeAttribute('data-text-size');
+      } else {
+        docEl.setAttribute('data-text-size', nextSize);
+      }
+      localStorage.setItem('hwm_text_size', nextSize);
+      announce(`Text size set to ${nextSize}`);
     });
+  }
 
-    window.addEventListener('mousemove', (e) => {
-      if (guideActive) {
-        readingGuide.style.top = `${e.clientY - 24}px`;
+  // Text Spacing Override (WCAG SC 1.4.12: Letter & Line Spacing)
+  if (spacingToggle) {
+    spacingToggle.addEventListener('click', () => {
+      const isExpanded = docEl.getAttribute('data-text-spacing') === 'expanded';
+      if (isExpanded) {
+        docEl.removeAttribute('data-text-spacing');
+        spacingToggle.setAttribute('aria-pressed', 'false');
+        localStorage.setItem('hwm_spacing', 'false');
+        announce('Standard text spacing restored');
+      } else {
+        docEl.setAttribute('data-text-spacing', 'expanded');
+        spacingToggle.setAttribute('aria-pressed', 'true');
+        localStorage.setItem('hwm_spacing', 'true');
+        announce('Expanded text spacing enabled (WCAG SC 1.4.12)');
       }
     });
+  }
 
-    window.addEventListener('touchmove', (e) => {
-      if (guideActive && e.touches[0]) {
-        readingGuide.style.top = `${e.touches[0].clientY - 24}px`;
+  // Motion Reducer / Killswitch (WCAG SC 2.3.3: Animation from Interactions)
+  if (motionToggle) {
+    motionToggle.addEventListener('click', () => {
+      const isReduced = docEl.getAttribute('data-motion') === 'reduced';
+      if (isReduced) {
+        docEl.removeAttribute('data-motion');
+        motionToggle.setAttribute('aria-pressed', 'false');
+        localStorage.setItem('hwm_motion', 'standard');
+        announce('Standard animation enabled');
+      } else {
+        docEl.setAttribute('data-motion', 'reduced');
+        motionToggle.setAttribute('aria-pressed', 'true');
+        localStorage.setItem('hwm_motion', 'reduced');
+        announce('Animations and smooth motion disabled');
       }
     });
   }

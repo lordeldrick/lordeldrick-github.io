@@ -114,6 +114,48 @@
     --letter-spacing-body: 0.04em;
     --max-reading-width: 60ch;
   }
+
+  /* WCAG 2.2 AAA Text Sizing (SC 1.4.4 / 1.4.8) */
+  [data-text-size="large"] {
+    font-size: 1.25rem !important;
+  }
+  [data-text-size="xlarge"] {
+    font-size: 1.4rem !important;
+  }
+
+  /* WCAG 2.2 AAA SC 1.4.12 Text Spacing Override */
+  [data-text-spacing="expanded"] {
+    line-height: 2 !important;
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.16em !important;
+  }
+  [data-text-spacing="expanded"] p, 
+  [data-text-spacing="expanded"] li {
+    margin-bottom: 2em !important;
+  }
+
+  /* WCAG 2.2 AAA SC 2.3.3 Animation & Motion Killswitch */
+  [data-motion="reduced"] *,
+  [data-motion="reduced"] *::before,
+  [data-motion="reduced"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* EAA Monochrome / Low-Stimulus Mode */
+  [data-theme="monochrome"] {
+    filter: grayscale(100%);
+    --color-bg: #ffffff;
+    --color-surface: #ffffff;
+    --color-surface-subtle: #f0f0f0;
+    --color-border: #000000;
+    --color-text-main: #000000;
+    --color-text-muted: #222222;
+    --color-primary: #000000;
+    --color-accent: #000000;
+  }
 }
 
 @layer reset {
@@ -357,17 +399,17 @@
     border-color: var(--color-primary);
   }
 
-  /* Reading Guide Mask */
-  #reading-guide {
-    display: none;
-    position: fixed;
-    left: 0;
-    right: 0;
-    height: 48px;
-    background: rgba(0, 75, 117, 0.12);
-    border-block: 2px solid var(--color-primary);
-    pointer-events: none;
-    z-index: 999;
+  /* Live Region Announcement (Screen Readers) */
+  #a11y-announcer {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* Hero Section */

@@ -40,25 +40,36 @@
     </script>
 </head>
 <body id="page-top">
-    <!-- Reading Guide Ruler Mask for Cognitive / ADHD Focus -->
-    <div id="reading-guide" aria-hidden="true"></div>
+    <!-- Live Announcer for Screen Readers (ARIA live region) -->
+    <div id="a11y-announcer" role="status" aria-live="polite" class="visually-hidden"></div>
 
     <!-- Skip Link for Screen Readers and Keyboard Users (WCAG 2.4.1) -->
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <!-- Accessibility Preference Bar (WCAG 2.2 AAA Tooling) -->
-    <div class="a11y-toolbar" role="region" aria-label="Accessibility display preferences">
+    <!-- Accessibility Preference Bar (WCAG 2.2 AAA & European Accessibility Act Tools) -->
+    <div class="a11y-toolbar" role="region" aria-label="Accessibility &amp; display controls">
         <div class="site-container a11y-toolbar-content">
-            <span><strong>Accessibility Options:</strong></span>
+            <span><strong>Accessibility Controls:</strong></span>
             <div class="a11y-controls">
-                <button type="button" class="a11y-btn" id="theme-toggle" aria-label="Toggle visual theme">
-                    <span aria-hidden="true">🌓</span> Theme: Light / Dark / AAA High Contrast
+                <!-- Theme Toggle: Light / Dark / High-Contrast AAA / Monochrome -->
+                <button type="button" class="a11y-btn" id="theme-toggle" aria-label="Theme: Light. Click to cycle theme">
+                    <span aria-hidden="true">🌓</span> Theme: Contrast
                 </button>
+                <!-- Dyslexia Font Toggle -->
                 <button type="button" class="a11y-btn" id="dyslexia-toggle" aria-pressed="false" aria-label="Toggle dyslexia-friendly font">
                     <span aria-hidden="true">📖</span> Dyslexia Font
                 </button>
-                <button type="button" class="a11y-btn" id="reading-guide-toggle" aria-pressed="false" aria-label="Toggle horizontal reading ruler">
-                    <span aria-hidden="true">📏</span> Reading Ruler
+                <!-- Text Size Scaler (WCAG SC 1.4.4 / 1.4.8) -->
+                <button type="button" class="a11y-btn" id="text-size-toggle" aria-label="Cycle text size: Standard, Large (+25%), X-Large (+50%)">
+                    <span aria-hidden="true">🔍</span> Text Size: A / A+ / A++
+                </button>
+                <!-- Text Spacing Override (WCAG SC 1.4.12) -->
+                <button type="button" class="a11y-btn" id="spacing-toggle" aria-pressed="false" aria-label="Toggle expanded text spacing for readability">
+                    <span aria-hidden="true">↔️</span> Spacing
+                </button>
+                <!-- Motion Killswitch (WCAG SC 2.3.3) -->
+                <button type="button" class="a11y-btn" id="motion-toggle" aria-pressed="false" aria-label="Disable all animations and transitions">
+                    <span aria-hidden="true">⏸️</span> Pause Motion
                 </button>
             </div>
         </div>
@@ -563,12 +574,18 @@
                 <li><a href="#offerings">Tuition</a></li>
                 <li><a href="#matcher">Lesson Matcher</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#accessibility-statement">Accessibility Statement</a></li>
                 <li><a href="https://www.facebook.com/hannahwattsmusic" target="_blank" rel="noopener noreferrer">Facebook</a></li>
             </ul>
+        </div>
+        <div class="site-container mt-md" style="font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.15); padding-top: var(--space-md);">
+            <div id="accessibility-statement" class="reading-container">
+                <p><strong>European Accessibility Act (EAA) &amp; WCAG 2.2 Level AAA Commitment:</strong> This site is designed to conform to WCAG 2.2 AAA guidelines and Directive (EU) 2019/882. We provide customizable contrast themes, dyslexia-friendly typography, client-side text scaling, expanded line/letter spacing, motion reduction controls, screen reader live-region feedback, and accessible contact pathways via email, telephone, SMS, and WhatsApp.</p>
+            </div>
         </div>
     </footer>
 
     <!-- Modern Vanilla JS Controller with Cache-Buster -->
-    <script src="js/scripts.js?v=2.3"></script>
+    <script src="js/scripts.js?v=2.4"></script>
 </body>
 </html>
