@@ -168,6 +168,8 @@
     --color-accent: #000000;
     --color-accent-text: #ffffff;
     --color-focus-ring: #000000;
+    --color-hero-bg-gradient: #000000;
+    --color-hero-text: #ffffff;
   }
 }
 
@@ -454,13 +456,14 @@
     font-weight: 800;
     line-height: 1.15;
     margin-bottom: var(--space-md);
+    color: #ffffff !important;
   }
 
   .hero-subtitle {
     font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     line-height: 1.4;
     margin-bottom: var(--space-lg);
-    color: #e0f2ef;
+    color: #ffffff !important;
     max-width: 55ch;
   }
 
