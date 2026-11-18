@@ -23,7 +23,9 @@
   const a11yStatusHint = document.getElementById('a11y-status-hint');
   const a11yCollapseIcon = document.getElementById('a11y-collapse-icon');
   const themeToggle = document.getElementById('theme-toggle');
-  const dyslexiaToggle = document.getElementById('dyslexia-toggle');
+  const fontToggle = document.getElementById('font-family-toggle');
+  const fontLabel = document.getElementById('font-family-label');
+  const bionicToggle = document.getElementById('bionic-toggle');
   const textSizeToggle = document.getElementById('text-size-toggle');
   const spacingToggle = document.getElementById('spacing-toggle');
   const motionToggle = document.getElementById('motion-toggle');
@@ -39,7 +41,8 @@
   // Load saved preferences
   const savedA11yCollapsed = localStorage.getItem('hwm_a11y_collapsed') === 'true';
   const savedTheme = localStorage.getItem('hwm_theme') || 'light';
-  const savedDyslexic = localStorage.getItem('hwm_dyslexic') === 'true';
+  const savedFont = localStorage.getItem('hwm_font') || (localStorage.getItem('hwm_dyslexic') === 'true' ? 'dyslexic' : 'standard');
+  const savedBionic = localStorage.getItem('hwm_bionic') === 'true';
   const savedTextSize = localStorage.getItem('hwm_text_size') || 'normal';
   const savedSpacing = localStorage.getItem('hwm_spacing') === 'true';
   const savedMotion = localStorage.getItem('hwm_motion') === 'reduced';
@@ -69,9 +72,129 @@
   if (savedTheme !== 'light') {
     docEl.setAttribute('data-theme', savedTheme);
   }
-  if (savedDyslexic) {
-    docEl.setAttribute('data-dyslexic', 'true');
-    if (dyslexiaToggle) dyslexiaToggle.setAttribute('aria-pressed', 'true');
+
+  // Restore Font Mode (Standard -> Atkinson Hyperlegible -> OpenDyslexic)
+  function applyFontMode(font) {
+    if (font === 'standard') {
+      docEl.removeAttribute('data-font');
+      docEl.removeAttribute('data-dyslexic');
+      if (fontLabel) fontLabel.textContent = 'Standard';
+    } else if (font === 'atkinson') {
+      docEl.setAttribute('data-font', 'atkinson');
+      docEl.removeAttribute('data-dyslexic');
+      if (fontLabel) fontLabel.textContent = 'Atkinson';
+    } else if (font === 'dyslexic') {
+      docEl.setAttribute('data-font', 'dyslexic');
+      docEl.setAttribute('data-dyslexic', 'true');
+      if (fontLabel) fontLabel.textContent = 'OpenDyslexic';
+    }
+    localStorage.setItem('hwm_font', font);
+  }
+  applyFontMode(savedFont);
+
+  // Font Cycler: Standard -> Atkinson Hyperlegible -> OpenDyslexic
+  if (fontToggle) {
+    const fonts = ['standard', 'atkinson', 'dyslexic'];
+    fontToggle.addEventListener('click', () => {
+      const current = docEl.getAttribute('data-font') || 'standard';
+      const nextIdx = (fonts.indexOf(current) + 1) % fonts.length;
+      const nextFont = fonts[nextIdx];
+      applyFontMode(nextFont);
+      const friendlyName = nextFont === 'atkinson' ? 'Atkinson Hyperlegible' : nextFont === 'dyslexic' ? 'OpenDyslexic' : 'Standard';
+      fontToggle.setAttribute('aria-label', `Font Style: ${friendlyName}. Click to cycle font`);
+      announce(`Typography set to ${friendlyName}`);
+    });
+  }
+
+  // ==========================================
+  // Bionic Reading Algorithm & Controller
+  // ==========================================
+  let isBionicActive = false;
+  const bionicOriginalMap = new Map();
+
+  function bionicFormatText(text) {
+    // Split into tokens preserving spaces and punctuation
+    return text.replace(/([A-Za-z0-9]+)/g, (word) => {
+      const len = word.length;
+      if (len === 1) {
+        return `<span class="bionic-word"><b class="bionic-fixation">${word}</b></span>`;
+      }
+      // Fixation length: roughly 40-50% of the word length
+      const fixLen = len <= 3 ? 1 : len <= 6 ? 2 : Math.ceil(len * 0.45);
+      const fixation = word.slice(0, fixLen);
+      const rest = word.slice(fixLen);
+      return `<span class="bionic-word"><b class="bionic-fixation">${fixation}</b>${rest}</span>`;
+    });
+  }
+
+  function enableBionicReading() {
+    if (isBionicActive) return;
+    const targets = document.querySelectorAll(
+      'main p, main li, main h1, main h2, main h3, main blockquote, main .card-text, main .faq-answer p, main .form-hint, main .section-lead, main .badge-chip'
+    );
+
+    targets.forEach((el) => {
+      // Don't format inside inputs, buttons, or piano widget
+      if (el.closest('.piano-widget') || el.closest('#matcher-output') || el.closest('button')) return;
+      if (!bionicOriginalMap.has(el)) {
+        bionicOriginalMap.set(el, el.innerHTML);
+      }
+      // Process text nodes inside element without clobbering children tags
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+      const textNodes = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue.trim().length > 0 && node.parentElement && !node.parentElement.classList.contains('bionic-fixation')) {
+          textNodes.push(node);
+        }
+      }
+      textNodes.forEach((tNode) => {
+        const span = document.createElement('span');
+        span.innerHTML = bionicFormatText(tNode.nodeValue);
+        tNode.replaceWith(span);
+      });
+    });
+
+    isBionicActive = true;
+    docEl.setAttribute('data-bionic', 'true');
+    if (bionicToggle) bionicToggle.setAttribute('aria-pressed', 'true');
+    localStorage.setItem('hwm_bionic', 'true');
+    announce('Bionic Reading mode enabled');
+  }
+
+  function disableBionicReading() {
+    if (!isBionicActive) return;
+    bionicOriginalMap.forEach((originalHTML, el) => {
+      if (el && el.isConnected) {
+        el.innerHTML = originalHTML;
+      }
+    });
+    bionicOriginalMap.clear();
+    isBionicActive = false;
+    docEl.removeAttribute('data-bionic');
+    if (bionicToggle) bionicToggle.setAttribute('aria-pressed', 'false');
+    localStorage.setItem('hwm_bionic', 'false');
+    announce('Bionic Reading mode disabled');
+  }
+
+  if (bionicToggle) {
+    bionicToggle.addEventListener('click', () => {
+      if (isBionicActive) {
+        disableBionicReading();
+      } else {
+        enableBionicReading();
+      }
+    });
+  }
+
+  // Restore Bionic state on page load
+  if (savedBionic) {
+    // Wait until DOM is ready to transform content
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', enableBionicReading);
+    } else {
+      setTimeout(enableBionicReading, 100);
+    }
   }
   if (savedTextSize !== 'normal') {
     docEl.setAttribute('data-text-size', savedTextSize);
@@ -105,23 +228,7 @@
     });
   }
 
-  // Dyslexia Mode Toggle (Atkinson Hyperlegible / OpenDyslexic)
-  if (dyslexiaToggle) {
-    dyslexiaToggle.addEventListener('click', () => {
-      const isDyslexic = docEl.getAttribute('data-dyslexic') === 'true';
-      if (isDyslexic) {
-        docEl.removeAttribute('data-dyslexic');
-        dyslexiaToggle.setAttribute('aria-pressed', 'false');
-        localStorage.setItem('hwm_dyslexic', 'false');
-        announce('Dyslexia font disabled');
-      } else {
-        docEl.setAttribute('data-dyslexic', 'true');
-        dyslexiaToggle.setAttribute('aria-pressed', 'true');
-        localStorage.setItem('hwm_dyslexic', 'true');
-        announce('Dyslexia-friendly font enabled');
-      }
-    });
-  }
+
 
   // Text Sizing Cycler (SC 1.4.4 / 1.4.8: Normal -> Large +25% -> X-Large +50%)
   if (textSizeToggle) {

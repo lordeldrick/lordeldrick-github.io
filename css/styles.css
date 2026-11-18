@@ -40,6 +40,7 @@
     /* Typography */
     --font-sans: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-heading: 'Catamaran', var(--font-sans);
+    --font-atkinson: 'Atkinson Hyperlegible', var(--font-sans);
     --font-dyslexic: 'OpenDyslexic', 'Atkinson Hyperlegible', var(--font-sans);
 
     --font-current-body: var(--font-sans);
@@ -118,11 +119,28 @@
     --color-focus-ring-offset: #000000;
   }
 
+  /* Atkinson Hyperlegible Font Mode */
+  [data-font="atkinson"] {
+    --font-current-body: var(--font-atkinson);
+    --line-height-body: 1.8;
+    --letter-spacing-body: 0.025em;
+  }
+
+  /* OpenDyslexic Font Mode */
+  [data-font="dyslexic"],
   [data-dyslexic="true"] {
     --font-current-body: var(--font-dyslexic);
     --line-height-body: 1.9;
     --letter-spacing-body: 0.04em;
     --max-reading-width: 60ch;
+  }
+
+  /* Bionic Reading Fixation Styling */
+  .bionic-word {
+    display: inline;
+  }
+  .bionic-fixation {
+    font-weight: 800 !important;
   }
 
   /* WCAG 2.2 AAA Text Sizing (SC 1.4.4 / 1.4.8) */

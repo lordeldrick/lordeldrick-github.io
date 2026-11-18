@@ -9,10 +9,10 @@
     
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
-    <!-- Performance & Font Preconnects (subsetted Lato & Catamaran with display=swap) -->
+    <!-- Performance & Font Preconnects (Atkinson Hyperlegible, Catamaran, Lato) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700;800&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Catamaran:wght@700;800&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
     <!-- Zero-Framework Modern Accessible CSS (WCAG 2.2 AAA Compliant) -->
     <link href="css/styles.css" rel="stylesheet" />
@@ -63,9 +63,13 @@
                     <button type="button" class="a11y-btn" id="theme-toggle" aria-label="Theme: Light. Click to cycle theme">
                         <span aria-hidden="true">🌓</span> Theme: Contrast
                     </button>
-                    <!-- Dyslexia Font Toggle -->
-                    <button type="button" class="a11y-btn" id="dyslexia-toggle" aria-pressed="false" aria-label="Toggle dyslexia-friendly font">
-                        <span aria-hidden="true">📖</span> Dyslexia Font
+                    <!-- Font Cycler: Standard / Atkinson Hyperlegible / OpenDyslexic -->
+                    <button type="button" class="a11y-btn" id="font-family-toggle" aria-label="Font Style: Standard. Click to cycle Atkinson Hyperlegible or OpenDyslexic">
+                        <span aria-hidden="true">🔤</span> Font: <span id="font-family-label">Standard</span>
+                    </button>
+                    <!-- Bionic Reading Guided Fixation Toggle -->
+                    <button type="button" class="a11y-btn" id="bionic-toggle" aria-pressed="false" aria-label="Toggle Bionic Reading style text emphasis">
+                        <span aria-hidden="true">👁️</span> <strong>Bio</strong>nic Read
                     </button>
                     <!-- Text Size Scaler (WCAG SC 1.4.4 / 1.4.8) -->
                     <button type="button" class="a11y-btn" id="text-size-toggle" aria-label="Cycle text size: Standard, Large (+25%), X-Large (+50%)">
@@ -670,6 +674,6 @@
     </footer>
 
     <!-- Modern Vanilla JS Controller with Cache-Buster -->
-    <script src="js/scripts.js?v=3.0"></script>
+    <script src="js/scripts.js?v=3.1"></script>
 </body>
 </html>
