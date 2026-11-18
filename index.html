@@ -250,6 +250,14 @@
                             <span aria-hidden="true" id="piano-fs-icon">🔄</span> <span id="piano-fs-label">Rotate &amp; Play Fullscreen</span>
                         </button>
                     </div>
+                    <!-- Floating overlay controls — only visible in fullscreen mode -->
+                    <div class="piano-fs-overlay" id="piano-fs-overlay" aria-hidden="true">
+                        <div class="piano-fs-overlay-octave" role="group" aria-label="Octave register selector (fullscreen)">
+                            <button type="button" class="piano-fs-oct-btn" id="fs-octave-3-btn" aria-pressed="false" aria-label="Switch to Lower Octave C3 to C4">C3</button>
+                            <button type="button" class="piano-fs-oct-btn" id="fs-octave-4-btn" aria-pressed="true" aria-label="Switch to Standard Octave C4 to C5">C4</button>
+                        </div>
+                        <button type="button" class="piano-fs-close-btn" id="piano-fs-close-btn" aria-label="Exit fullscreen piano">✕</button>
+                    </div>
                     <div class="piano-keys-wrapper">
                         <div class="piano-keyboard" role="toolbar" aria-label="Acoustic piano keyboard layout. Use Left/Right Arrow keys to navigate notes, or press keys 1 to 8 and Q, W, R, T, Y to play.">
                             <!-- C4 -->

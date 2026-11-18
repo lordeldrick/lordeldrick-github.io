@@ -477,10 +477,28 @@
   const pianoFullscreenBtn = document.getElementById('piano-fullscreen-btn');
   const pianoFsIcon = document.getElementById('piano-fs-icon');
   const pianoFsLabel = document.getElementById('piano-fs-label');
+  const pianoFsOverlay = document.getElementById('piano-fs-overlay');
+  const pianoFsCloseBtn = document.getElementById('piano-fs-close-btn');
+  const fsOctave3Btn = document.getElementById('fs-octave-3-btn');
+  const fsOctave4Btn = document.getElementById('fs-octave-4-btn');
   let isPianoFullscreen = false;
 
   function isMobileScreen() {
     return window.innerWidth <= 820 || ('ontouchstart' in window);
+  }
+
+  function showFsOverlay() {
+    if (pianoFsOverlay) {
+      pianoFsOverlay.classList.add('piano-fs-overlay-visible');
+      pianoFsOverlay.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function hideFsOverlay() {
+    if (pianoFsOverlay) {
+      pianoFsOverlay.classList.remove('piano-fs-overlay-visible');
+      pianoFsOverlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   function closePianoFullscreen() {
@@ -488,6 +506,7 @@
     isPianoFullscreen = false;
     pianoWidget.classList.remove('piano-fullscreen-active', 'piano-rotated-landscape');
     document.body.classList.remove('piano-modal-open');
+    hideFsOverlay();
     if (pianoFsIcon) pianoFsIcon.textContent = '🔄';
     if (pianoFsLabel) pianoFsLabel.textContent = 'Rotate & Play Fullscreen';
     if (pianoFullscreenBtn) {
@@ -515,6 +534,7 @@
     isPianoFullscreen = true;
     pianoWidget.classList.add('piano-fullscreen-active');
     document.body.classList.add('piano-modal-open');
+    showFsOverlay();
 
     if (pianoFsIcon) pianoFsIcon.textContent = '✕';
     if (pianoFsLabel) pianoFsLabel.textContent = 'Exit Fullscreen';
@@ -564,6 +584,34 @@
       } else {
         openPianoFullscreen();
       }
+    });
+  }
+
+  // Overlay close button
+  if (pianoFsCloseBtn) {
+    pianoFsCloseBtn.addEventListener('click', closePianoFullscreen);
+  }
+
+  // Overlay octave buttons — mirror the main octave buttons
+  if (fsOctave3Btn) {
+    fsOctave3Btn.addEventListener('click', () => {
+      currentOctaveMultiplier = 0.5;
+      octave3Btn.setAttribute('aria-pressed', 'true');
+      octave4Btn.setAttribute('aria-pressed', 'false');
+      fsOctave3Btn.setAttribute('aria-pressed', 'true');
+      fsOctave4Btn.setAttribute('aria-pressed', 'false');
+      announce('Piano register shifted to Lower Bass Octave C3 to C4');
+    });
+  }
+
+  if (fsOctave4Btn) {
+    fsOctave4Btn.addEventListener('click', () => {
+      currentOctaveMultiplier = 1.0;
+      octave4Btn.setAttribute('aria-pressed', 'true');
+      octave3Btn.setAttribute('aria-pressed', 'false');
+      fsOctave4Btn.setAttribute('aria-pressed', 'true');
+      fsOctave3Btn.setAttribute('aria-pressed', 'false');
+      announce('Piano register shifted to Standard Octave C4 to C5');
     });
   }
 
