@@ -230,16 +230,24 @@
             <div class="site-container">
                 <div class="piano-widget">
                     <h2 class="section-heading">Try the Interactive Piano</h2>
-                    <p class="card-text mb-md">
+                    <p class="card-text mb-md piano-desc-desktop">
                         Play a full chromatic octave including natural &amp; <strong>sharp (#)</strong> notes. Click, tap, or press keys <kbd>1</kbd>–<kbd>8</kbd> for white keys and <kbd>Q</kbd>, <kbd>W</kbd>, <kbd>R</kbd>, <kbd>T</kbd>, <kbd>Y</kbd> for black keys.
                     </p>
-                    <div class="piano-octave-bar" role="group" aria-label="Octave register selector">
-                        <span><strong>Octave:</strong></span>
-                        <button type="button" class="piano-octave-btn" id="octave-3-btn" aria-pressed="false" aria-label="Switch to Lower Octave C3 to C4">
-                            Bass (C3–C4)
-                        </button>
-                        <button type="button" class="piano-octave-btn" id="octave-4-btn" aria-pressed="true" aria-label="Switch to Standard Octave C4 to C5">
-                            Treble (C4–C5)
+                    <p class="card-text mb-md piano-desc-mobile">
+                        Tap a key to play. For best experience, tap <strong>Rotate &amp; Play Fullscreen</strong> to open the full keyboard in landscape mode.
+                    </p>
+                    <div class="piano-toolbar-row">
+                        <div class="piano-octave-bar" role="group" aria-label="Octave register selector">
+                            <span><strong>Octave:</strong></span>
+                            <button type="button" class="piano-octave-btn" id="octave-3-btn" aria-pressed="false" aria-label="Switch to Lower Octave C3 to C4">
+                                Bass (C3–C4)
+                            </button>
+                            <button type="button" class="piano-octave-btn" id="octave-4-btn" aria-pressed="true" aria-label="Switch to Standard Octave C4 to C5">
+                                Treble (C4–C5)
+                            </button>
+                        </div>
+                        <button type="button" class="piano-action-btn piano-fullscreen-trigger" id="piano-fullscreen-btn" aria-label="Open rotated fullscreen piano for two-handed play">
+                            <span aria-hidden="true" id="piano-fs-icon">🔄</span> <span id="piano-fs-label">Rotate &amp; Play Fullscreen</span>
                         </button>
                     </div>
                     <div class="piano-keys-wrapper">
@@ -675,6 +683,6 @@
     </footer>
 
     <!-- Modern Vanilla JS Controller with Cache-Buster -->
-    <script src="js/scripts.js?v=3.1"></script>
+    <script src="js/scripts.js?v=3.2"></script>
 </body>
 </html>

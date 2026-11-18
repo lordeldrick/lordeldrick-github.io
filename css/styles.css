@@ -745,29 +745,53 @@
     border-top: 1px solid var(--color-border);
   }
 
-  .piano-octave-bar {
+  .piano-toolbar-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: var(--space-sm);
     margin-bottom: var(--space-md);
   }
 
-  .piano-octave-btn {
+  .piano-octave-bar {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .piano-octave-btn,
+  .piano-action-btn {
     min-height: var(--min-target-size);
-    padding: 6px 16px;
+    padding: 6px 14px;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-full);
     background: var(--color-surface);
     color: var(--color-text-main);
     font-weight: 700;
+    font-size: 0.95rem;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+  }
+
+  .piano-octave-btn:hover,
+  .piano-action-btn:hover {
+    background: var(--color-surface-subtle);
+    border-color: var(--color-primary);
   }
 
   .piano-octave-btn[aria-pressed="true"] {
     background: var(--color-primary);
     color: var(--color-primary-text) !important;
     border-color: var(--color-primary);
+  }
+
+  .piano-action-btn:active {
+    transform: scale(0.98);
   }
 
   .card-icon {
@@ -939,8 +963,174 @@
     color: #000000;
     border-color: #ffffff;
   }
-    padding: 1px 4px;
-    margin-top: 4px;
+
+  /* Responsive Mobile Piano Scaling (Samsung S26 Ultra, iPhones, 360px+ devices) */
+  @media (max-width: 540px) {
+    .piano-desc-desktop { display: none; }
+    .piano-desc-mobile  { display: block; }
+
+    .piano-widget {
+      padding: var(--space-sm);
+    }
+
+    .piano-keys-wrapper {
+      padding-block: var(--space-xs);
+    }
+
+    .piano-keyboard {
+      padding: 4px;
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+    }
+
+    .piano-key {
+      /* 8 white keys fitting viewport with padding */
+      width: calc((100vw - 44px) / 8);
+      max-width: 46px;
+      min-width: 36px;
+      height: 150px;
+      padding-bottom: 4px;
+    }
+
+    .piano-key-sharp {
+      width: calc((100vw - 44px) / 14);
+      max-width: 28px;
+      min-width: 22px;
+      height: 95px;
+      right: calc((100vw - 44px) / -28);
+    }
+
+    .piano-key-note {
+      font-size: 0.95rem;
+    }
+
+    .piano-key-sharp .piano-key-note {
+      font-size: 0.75rem;
+    }
+
+    .piano-key-kbd,
+    .piano-key-sharp .piano-key-kbd {
+      display: none; /* Hide desktop keyboard keys on mobile to avoid clutter */
+    }
+  }
+
+  @media (min-width: 541px) {
+    .piano-desc-desktop { display: block; }
+    .piano-desc-mobile  { display: none; }
+  }
+
+  /* Hide fullscreen button on large screens where it's not needed */
+  @media (min-width: 820px) {
+    .piano-fullscreen-trigger {
+      display: none;
+    }
+  }
+
+  /* Rotated Landscape Fullscreen Piano Modal (for mobile play) */
+  .piano-widget.piano-fullscreen-active {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: var(--space-sm) var(--space-md) !important;
+    border-radius: 0 !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: var(--color-surface) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* When locked or simulated in rotated landscape mode */
+  .piano-widget.piano-fullscreen-active.piano-rotated-landscape {
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+    position: fixed !important;
+    top: -100vw !important;
+    left: 0 !important;
+    width: 100vh !important;
+    height: 100vw !important;
+  }
+
+  .piano-widget.piano-fullscreen-active .piano-keys-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .piano-widget.piano-fullscreen-active .piano-keyboard {
+    height: calc(100% - 20px);
+    max-height: 280px;
+    width: 100%;
+    max-width: 900px;
+    padding: 8px;
+  }
+
+  .piano-widget.piano-fullscreen-active .piano-key-col {
+    flex: 1;
+  }
+
+  .piano-widget.piano-fullscreen-active .piano-key {
+    width: 100%;
+    max-width: none;
+    min-width: 44px;
+    height: 100%;
+    font-size: 1.25rem;
+  }
+
+  .piano-widget.piano-fullscreen-active .piano-key-sharp {
+    width: 55%;
+    height: 60%;
+    right: -27.5%;
+    z-index: 10;
+  }
+
+  .piano-widget.piano-fullscreen-active .piano-key-kbd,
+  .piano-widget.piano-fullscreen-active .piano-key-sharp .piano-key-kbd {
+    display: inline-block;
+  }
+
+  /* Fullscreen header strip — octave controls + exit button */
+  .piano-widget.piano-fullscreen-active .piano-toolbar-row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+  }
+
+  .piano-widget.piano-fullscreen-active h2,
+  .piano-widget.piano-fullscreen-active .piano-desc-desktop,
+  .piano-widget.piano-fullscreen-active .piano-desc-mobile {
+    display: none; /* Hide title & description in fullscreen to maximise key area */
+  }
+
+  .piano-widget.piano-fullscreen-active p.text-muted {
+    font-size: 0.75rem;
+    padding: 4px 0;
+    flex-shrink: 0;
+  }
+
+  body.piano-modal-open {
+    overflow: hidden !important;
+    touch-action: none !important;
   }
 
   /* Testimonials Grid */

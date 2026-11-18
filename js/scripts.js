@@ -471,6 +471,130 @@
   });
 
   // ==========================================
+  // Fullscreen / Rotated Mobile Piano Controller
+  // ==========================================
+  const pianoWidget = document.querySelector('.piano-widget');
+  const pianoFullscreenBtn = document.getElementById('piano-fullscreen-btn');
+  const pianoFsIcon = document.getElementById('piano-fs-icon');
+  const pianoFsLabel = document.getElementById('piano-fs-label');
+  let isPianoFullscreen = false;
+
+  function isMobileScreen() {
+    return window.innerWidth <= 820 || ('ontouchstart' in window);
+  }
+
+  function closePianoFullscreen() {
+    if (!isPianoFullscreen || !pianoWidget) return;
+    isPianoFullscreen = false;
+    pianoWidget.classList.remove('piano-fullscreen-active', 'piano-rotated-landscape');
+    document.body.classList.remove('piano-modal-open');
+    if (pianoFsIcon) pianoFsIcon.textContent = '🔄';
+    if (pianoFsLabel) pianoFsLabel.textContent = 'Rotate & Play Fullscreen';
+    if (pianoFullscreenBtn) {
+      pianoFullscreenBtn.setAttribute('aria-label', 'Open rotated fullscreen piano for two-handed play');
+    }
+
+    // Try exiting native fullscreen if active
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+    // Unlock screen orientation if supported
+    if (screen.orientation && screen.orientation.unlock) {
+      try { screen.orientation.unlock(); } catch (e) {}
+    }
+    announce('Exited fullscreen piano');
+  }
+
+  function openPianoFullscreen() {
+    if (!pianoWidget) return;
+    initAudio();
+    isPianoFullscreen = true;
+    pianoWidget.classList.add('piano-fullscreen-active');
+    document.body.classList.add('piano-modal-open');
+
+    if (pianoFsIcon) pianoFsIcon.textContent = '✕';
+    if (pianoFsLabel) pianoFsLabel.textContent = 'Exit Fullscreen';
+    if (pianoFullscreenBtn) {
+      pianoFullscreenBtn.setAttribute('aria-label', 'Exit fullscreen piano mode');
+    }
+
+    const isPortrait = window.matchMedia('(orientation: portrait)').matches || window.innerHeight > window.innerWidth;
+
+    // Attempt Native Fullscreen & Screen Orientation Lock (Android/Chromium)
+    if (pianoWidget.requestFullscreen) {
+      pianoWidget.requestFullscreen().then(() => {
+        if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock('landscape').catch(() => {
+            // If orientation lock fails or isn't permitted in portrait, apply CSS rotation
+            if (isPortrait && isMobileScreen()) {
+              pianoWidget.classList.add('piano-rotated-landscape');
+            }
+          });
+        } else if (isPortrait && isMobileScreen()) {
+          pianoWidget.classList.add('piano-rotated-landscape');
+        }
+      }).catch(() => {
+        if (isPortrait && isMobileScreen()) {
+          pianoWidget.classList.add('piano-rotated-landscape');
+        }
+      });
+    } else if (pianoWidget.webkitRequestFullscreen) {
+      pianoWidget.webkitRequestFullscreen();
+      if (isPortrait && isMobileScreen()) {
+        pianoWidget.classList.add('piano-rotated-landscape');
+      }
+    } else {
+      // iOS Safari fallback: CSS simulated landscape modal
+      if (isPortrait && isMobileScreen()) {
+        pianoWidget.classList.add('piano-rotated-landscape');
+      }
+    }
+
+    announce('Entered fullscreen piano mode. Play with full width.');
+  }
+
+  if (pianoFullscreenBtn) {
+    pianoFullscreenBtn.addEventListener('click', () => {
+      if (isPianoFullscreen) {
+        closePianoFullscreen();
+      } else {
+        openPianoFullscreen();
+      }
+    });
+  }
+
+  // Handle Escape key to exit fullscreen piano
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isPianoFullscreen) {
+      closePianoFullscreen();
+    }
+  });
+
+  // Handle native orientation change or native fullscreen exit
+  window.addEventListener('orientationchange', () => {
+    if (isPianoFullscreen && pianoWidget) {
+      setTimeout(() => {
+        const isNowLandscape = window.innerWidth > window.innerHeight;
+        if (isNowLandscape) {
+          pianoWidget.classList.remove('piano-rotated-landscape');
+        } else if (isMobileScreen()) {
+          pianoWidget.classList.add('piano-rotated-landscape');
+        }
+      }, 150);
+    }
+  });
+
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && isPianoFullscreen) {
+      closePianoFullscreen();
+    }
+  });
+
+  // ==========================================
   // 3. Guided Lesson Matcher Form
   // ==========================================
   const matcherForm = document.getElementById('lesson-matcher-form');
