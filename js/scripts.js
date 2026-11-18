@@ -194,6 +194,16 @@
         primaryNavMenu.classList.remove('nav-open');
       });
     });
+
+    // Close menu with Escape key (WCAG 2.1.2 No Keyboard Trap)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && primaryNavMenu.classList.contains('nav-open')) {
+        primaryNavMenu.classList.remove('nav-open');
+        navToggleBtn.setAttribute('aria-expanded', 'false');
+        navToggleBtn.focus();
+        announce('Navigation menu closed');
+      }
+    });
   }
 
   // ==========================================
@@ -279,8 +289,8 @@
     osc.stop(now + 1.2);
   }
 
-  const pianoKeys = document.querySelectorAll('.piano-key, .piano-key-sharp');
-  pianoKeys.forEach((key) => {
+  const pianoKeys = Array.from(document.querySelectorAll('.piano-keyboard button'));
+  pianoKeys.forEach((key, index) => {
     const note = key.getAttribute('data-note');
 
     function trigger() {
@@ -293,10 +303,29 @@
     }
 
     key.addEventListener('click', trigger);
+
+    // Roving Tabindex & Arrow Navigation (WCAG 2.1.1 / 2.4.3 APG Toolbar Pattern)
     key.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      let targetIndex = -1;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        targetIndex = (index + 1) % pianoKeys.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        targetIndex = (index - 1 + pianoKeys.length) % pianoKeys.length;
+      } else if (e.key === 'Home') {
+        targetIndex = 0;
+      } else if (e.key === 'End') {
+        targetIndex = pianoKeys.length - 1;
+      } else if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         trigger();
+        return;
+      }
+
+      if (targetIndex !== -1) {
+        e.preventDefault();
+        pianoKeys[index].setAttribute('tabindex', '-1');
+        pianoKeys[targetIndex].setAttribute('tabindex', '0');
+        pianoKeys[targetIndex].focus();
       }
     });
   });
@@ -383,6 +412,8 @@ Thank you!`;
       if (matcherOutput) {
         matcherOutput.style.display = 'block';
         matcherOutput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        matcherOutput.focus();
+        announce('Your personalized lesson enquiry has been generated below.');
       }
     });
   }

@@ -239,14 +239,14 @@
                         </button>
                     </div>
                     <div class="piano-keys-wrapper">
-                        <div class="piano-keyboard" role="group" aria-label="Acoustic piano keyboard layout with natural white and sharp black keys">
+                        <div class="piano-keyboard" role="toolbar" aria-label="Acoustic piano keyboard layout. Use Left/Right Arrow keys to navigate notes, or press keys 1 to 8 and Q, W, R, T, Y to play.">
                             <!-- C4 -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="C" aria-label="Play natural note C4">
+                                <button type="button" class="piano-key" data-note="C" tabindex="0" aria-label="Play natural note C4 (Key 1)">
                                     <span class="piano-key-note">C</span>
                                     <span class="piano-key-kbd">1</span>
                                 </button>
-                                <button type="button" class="piano-key-sharp" data-note="C#" aria-label="Play sharp note C sharp 4">
+                                <button type="button" class="piano-key-sharp" data-note="C#" tabindex="-1" aria-label="Play sharp note C sharp 4 (Key Q)">
                                     <span class="piano-key-note">C♯</span>
                                     <span class="piano-key-kbd">Q</span>
                                 </button>
@@ -254,11 +254,11 @@
 
                             <!-- D4 -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="D" aria-label="Play natural note D4">
+                                <button type="button" class="piano-key" data-note="D" tabindex="-1" aria-label="Play natural note D4 (Key 2)">
                                     <span class="piano-key-note">D</span>
                                     <span class="piano-key-kbd">2</span>
                                 </button>
-                                <button type="button" class="piano-key-sharp" data-note="D#" aria-label="Play sharp note D sharp 4">
+                                <button type="button" class="piano-key-sharp" data-note="D#" tabindex="-1" aria-label="Play sharp note D sharp 4 (Key W)">
                                     <span class="piano-key-note">D♯</span>
                                     <span class="piano-key-kbd">W</span>
                                 </button>
@@ -266,7 +266,7 @@
 
                             <!-- E4 (No sharp between E and F) -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="E" aria-label="Play natural note E4">
+                                <button type="button" class="piano-key" data-note="E" tabindex="-1" aria-label="Play natural note E4 (Key 3)">
                                     <span class="piano-key-note">E</span>
                                     <span class="piano-key-kbd">3</span>
                                 </button>
@@ -274,11 +274,11 @@
 
                             <!-- F4 -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="F" aria-label="Play natural note F4">
+                                <button type="button" class="piano-key" data-note="F" tabindex="-1" aria-label="Play natural note F4 (Key 4)">
                                     <span class="piano-key-note">F</span>
                                     <span class="piano-key-kbd">4</span>
                                 </button>
-                                <button type="button" class="piano-key-sharp" data-note="F#" aria-label="Play sharp note F sharp 4">
+                                <button type="button" class="piano-key-sharp" data-note="F#" tabindex="-1" aria-label="Play sharp note F sharp 4 (Key R)">
                                     <span class="piano-key-note">F♯</span>
                                     <span class="piano-key-kbd">R</span>
                                 </button>
@@ -286,11 +286,11 @@
 
                             <!-- G4 -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="G" aria-label="Play natural note G4">
+                                <button type="button" class="piano-key" data-note="G" tabindex="-1" aria-label="Play natural note G4 (Key 5)">
                                     <span class="piano-key-note">G</span>
                                     <span class="piano-key-kbd">5</span>
                                 </button>
-                                <button type="button" class="piano-key-sharp" data-note="G#" aria-label="Play sharp note G sharp 4">
+                                <button type="button" class="piano-key-sharp" data-note="G#" tabindex="-1" aria-label="Play sharp note G sharp 4 (Key T)">
                                     <span class="piano-key-note">G♯</span>
                                     <span class="piano-key-kbd">T</span>
                                 </button>
@@ -298,11 +298,11 @@
 
                             <!-- A4 -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="A" aria-label="Play natural note A4">
+                                <button type="button" class="piano-key" data-note="A" tabindex="-1" aria-label="Play natural note A4 (Key 6)">
                                     <span class="piano-key-note">A</span>
                                     <span class="piano-key-kbd">6</span>
                                 </button>
-                                <button type="button" class="piano-key-sharp" data-note="A#" aria-label="Play sharp note A sharp 4">
+                                <button type="button" class="piano-key-sharp" data-note="A#" tabindex="-1" aria-label="Play sharp note A sharp 4 (Key Y)">
                                     <span class="piano-key-note">A♯</span>
                                     <span class="piano-key-kbd">Y</span>
                                 </button>
@@ -310,7 +310,7 @@
 
                             <!-- B4 (No sharp between B and C) -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="B" aria-label="Play natural note B4">
+                                <button type="button" class="piano-key" data-note="B" tabindex="-1" aria-label="Play natural note B4 (Key 7)">
                                     <span class="piano-key-note">B</span>
                                     <span class="piano-key-kbd">7</span>
                                 </button>
@@ -318,7 +318,7 @@
 
                             <!-- C5 (Octave high C) -->
                             <div class="piano-key-col">
-                                <button type="button" class="piano-key" data-note="C5" aria-label="Play natural note C5">
+                                <button type="button" class="piano-key" data-note="C5" tabindex="-1" aria-label="Play natural note C5 (Key 8)">
                                     <span class="piano-key-note">C'</span>
                                     <span class="piano-key-kbd">8</span>
                                 </button>
@@ -523,7 +523,7 @@
                     </form>
 
                     <!-- Matcher Output Area -->
-                    <div id="matcher-output" style="display: none; margin-top: var(--space-lg); padding: var(--space-md); background: var(--color-surface-subtle); border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
+                    <div id="matcher-output" tabindex="-1" style="display: none; margin-top: var(--space-lg); padding: var(--space-md); background: var(--color-surface-subtle); border-radius: var(--radius-md); border: 2px solid var(--color-primary); outline: none;">
                         <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-xs);">Your Enquiry is Ready!</h3>
                         <p class="mb-md">Choose how you'd like to get in touch with Hannah:</p>
                         <div class="button-group">
@@ -670,6 +670,6 @@
     </footer>
 
     <!-- Modern Vanilla JS Controller with Cache-Buster -->
-    <script src="js/scripts.js?v=2.9"></script>
+    <script src="js/scripts.js?v=3.0"></script>
 </body>
 </html>
