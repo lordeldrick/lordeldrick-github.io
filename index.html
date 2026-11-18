@@ -51,8 +51,14 @@
         <!-- Accessibility Preference Bar (WCAG 2.2 AAA & European Accessibility Act Tools) -->
         <div class="a11y-toolbar" role="region" aria-label="Accessibility &amp; display controls">
             <div class="site-container a11y-toolbar-content">
-                <span><strong>Accessibility Controls:</strong></span>
-                <div class="a11y-controls">
+                <div class="a11y-header-row">
+                    <button type="button" class="a11y-collapse-btn" id="a11y-collapse-toggle" aria-expanded="true" aria-controls="a11y-controls-panel" aria-label="Collapse accessibility controls panel">
+                        <span aria-hidden="true" id="a11y-collapse-icon">▾</span>
+                        <span><strong>Accessibility Controls</strong></span>
+                    </button>
+                    <span class="a11y-status-hint small text-muted" id="a11y-status-hint">(Click to minimize)</span>
+                </div>
+                <div class="a11y-controls" id="a11y-controls-panel">
                     <!-- Theme Toggle: Light / Dark / High-Contrast AAA / Monochrome -->
                     <button type="button" class="a11y-btn" id="theme-toggle" aria-label="Theme: Light. Click to cycle theme">
                         <span aria-hidden="true">🌓</span> Theme: Contrast
@@ -664,6 +670,6 @@
     </footer>
 
     <!-- Modern Vanilla JS Controller with Cache-Buster -->
-    <script src="js/scripts.js?v=2.8"></script>
+    <script src="js/scripts.js?v=2.9"></script>
 </body>
 </html>

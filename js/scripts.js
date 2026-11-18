@@ -18,6 +18,10 @@
   // 1. Accessibility Preferences & Controller (WCAG 2.2 AAA & EAA)
   // ==========================================
   const docEl = document.documentElement;
+  const a11yCollapseBtn = document.getElementById('a11y-collapse-toggle');
+  const a11yToolbar = document.querySelector('.a11y-toolbar');
+  const a11yStatusHint = document.getElementById('a11y-status-hint');
+  const a11yCollapseIcon = document.getElementById('a11y-collapse-icon');
   const themeToggle = document.getElementById('theme-toggle');
   const dyslexiaToggle = document.getElementById('dyslexia-toggle');
   const textSizeToggle = document.getElementById('text-size-toggle');
@@ -33,11 +37,34 @@
   }
 
   // Load saved preferences
+  const savedA11yCollapsed = localStorage.getItem('hwm_a11y_collapsed') === 'true';
   const savedTheme = localStorage.getItem('hwm_theme') || 'light';
   const savedDyslexic = localStorage.getItem('hwm_dyslexic') === 'true';
   const savedTextSize = localStorage.getItem('hwm_text_size') || 'normal';
   const savedSpacing = localStorage.getItem('hwm_spacing') === 'true';
   const savedMotion = localStorage.getItem('hwm_motion') === 'reduced';
+
+  // Restore toolbar collapsed/minimized state
+  if (savedA11yCollapsed && a11yToolbar && a11yCollapseBtn) {
+    a11yToolbar.classList.add('a11y-minimized');
+    a11yCollapseBtn.setAttribute('aria-expanded', 'false');
+    a11yCollapseBtn.setAttribute('aria-label', 'Expand accessibility controls panel');
+    if (a11yCollapseIcon) a11yCollapseIcon.textContent = '▸';
+    if (a11yStatusHint) a11yStatusHint.textContent = '(Click to expand)';
+  }
+
+  // Collapse / Minimize Toggle Handler
+  if (a11yCollapseBtn && a11yToolbar) {
+    a11yCollapseBtn.addEventListener('click', () => {
+      const isMinimized = a11yToolbar.classList.toggle('a11y-minimized');
+      a11yCollapseBtn.setAttribute('aria-expanded', !isMinimized);
+      a11yCollapseBtn.setAttribute('aria-label', isMinimized ? 'Expand accessibility controls panel' : 'Collapse accessibility controls panel');
+      if (a11yCollapseIcon) a11yCollapseIcon.textContent = isMinimized ? '▸' : '▾';
+      if (a11yStatusHint) a11yStatusHint.textContent = isMinimized ? '(Click to expand)' : '(Click to minimize)';
+      localStorage.setItem('hwm_a11y_collapsed', isMinimized);
+      announce(isMinimized ? 'Accessibility controls minimized' : 'Accessibility controls expanded');
+    });
+  }
 
   if (savedTheme !== 'light') {
     docEl.setAttribute('data-theme', savedTheme);
