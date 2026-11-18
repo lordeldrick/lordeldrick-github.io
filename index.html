@@ -82,12 +82,16 @@
                 <a class="nav-brand" href="#page-top">
                     <span aria-hidden="true">🎹</span> Hannah Watts Music
                 </a>
-                <ul class="nav-links">
+                <button type="button" class="nav-toggle-btn" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav-menu" aria-label="Toggle navigation menu">
+                    <span aria-hidden="true">☰</span> Menu
+                </button>
+                <ul class="nav-links" id="primary-nav-menu">
                     <li><a class="nav-link" href="#about">About</a></li>
                     <li><a class="nav-link" href="#offerings">Who Can Learn</a></li>
                     <li><a class="nav-link" href="#interactive-piano">Interactive Piano</a></li>
                     <li><a class="nav-link" href="#testimonials">Reviews</a></li>
                     <li><a class="nav-link" href="#matcher">Lesson Matcher</a></li>
+                    <li><a class="nav-link" href="#faq">FAQ</a></li>
                     <li><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -218,6 +222,15 @@
                     <p class="card-text mb-md">
                         Play a full chromatic octave including natural &amp; <strong>sharp (#)</strong> notes. Click, tap, or press keys <kbd>1</kbd>–<kbd>8</kbd> for white keys and <kbd>Q</kbd>, <kbd>W</kbd>, <kbd>R</kbd>, <kbd>T</kbd>, <kbd>Y</kbd> for black keys.
                     </p>
+                    <div class="piano-octave-bar" role="group" aria-label="Octave register selector">
+                        <span><strong>Octave:</strong></span>
+                        <button type="button" class="piano-octave-btn" id="octave-3-btn" aria-pressed="false" aria-label="Switch to Lower Octave C3 to C4">
+                            Bass (C3–C4)
+                        </button>
+                        <button type="button" class="piano-octave-btn" id="octave-4-btn" aria-pressed="true" aria-label="Switch to Standard Octave C4 to C5">
+                            Treble (C4–C5)
+                        </button>
+                    </div>
                     <div class="piano-keys-wrapper">
                         <div class="piano-keyboard" role="group" aria-label="Acoustic piano keyboard layout with natural white and sharp black keys">
                             <!-- C4 -->
@@ -488,8 +501,8 @@
 
                         <div class="form-group">
                             <label class="form-label" for="contact-name">Your Name &amp; Contact Details</label>
-                            <span class="form-hint">Optional at this stage — helps personalize your enquiry note.</span>
-                            <input type="text" id="contact-name" name="name" class="form-control" placeholder="e.g. Sarah &amp; Leo Bell" />
+                            <span id="name-hint" class="form-hint">Optional at this stage — helps personalize your enquiry note.</span>
+                            <input type="text" id="contact-name" name="name" class="form-control" placeholder="e.g. Sarah &amp; Leo Bell" autocomplete="name" aria-describedby="name-hint" />
                         </div>
 
                         <div class="form-group">
@@ -513,14 +526,78 @@
                             <a id="matcher-email-btn" class="btn btn-outline" href="#">
                                 ✉️ Send via Email Client
                             </a>
+                            <button type="button" id="matcher-copy-btn" class="btn btn-secondary" style="color: var(--color-text-main) !important; border-color: var(--color-border); background: var(--color-surface);">
+                                📋 Copy Enquiry Text
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Studio FAQ Section -->
+        <section id="faq" class="section">
+            <div class="site-container">
+                <div class="text-center mb-xl">
+                    <h2 class="section-heading">Frequently Asked Questions</h2>
+                    <p class="section-lead mx-auto">Helpful information on lesson setup, Hull locations, instrument needs, and inclusive tuition.</p>
+                </div>
+                <div class="faq-accordion">
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>Where do lessons take place?</span>
+                            <span aria-hidden="true">▾</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Hannah provides one-to-one tuition in Hull and surrounding East Yorkshire areas. Lessons are held either at Hannah's dedicated teaching studio or in the comfort of your own home depending on scheduling, accessibility, and location.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>How long are lessons and what age can children start?</span>
+                            <span aria-hidden="true">▾</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Students can begin as young as 4 years old. For younger beginners, 30-minute sessions are ideal to maintain focus and joy. Older children, teens, and adults typically take 45-minute or 60-minute lessons tailored to their individual goals.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>How does Special Educational Needs (SEN) &amp; BSL tuition work?</span>
+                            <span aria-hidden="true">▾</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Hannah adapts each lesson to the student's unique sensory, physical, and communication requirements. With British Sign Language (BSL) proficiency, deaf or hard-of-hearing students can learn directly without language barriers. Lessons move at a comfortable, calm pace with visual cues and zero stress.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>Do I need an acoustic piano at home?</span>
+                            <span aria-hidden="true">▾</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Not right away! While an acoustic piano or 88-key weighted digital piano is ideal for advanced technique, beginners can happily start on a touch-sensitive electronic keyboard while exploring their interest.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            <span>Do students have to sit formal music exams?</span>
+                            <span aria-hidden="true">▾</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Exams are completely optional. While Hannah holds a 100% exam pass rate for students wishing to pursue ABRSM or Trinity Classical/Rock/Pop grades, many pupils choose to learn purely for fun, relaxation, and personal repertoire enjoyment.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
         <!-- Direct Contact Section -->
-        <section id="contact" class="section">
+        <section id="contact" class="section section-alt">
             <div class="site-container">
                 <div class="grid-2col">
                     <div>
@@ -586,6 +663,6 @@
     </footer>
 
     <!-- Modern Vanilla JS Controller with Cache-Buster -->
-    <script src="js/scripts.js?v=2.6"></script>
+    <script src="js/scripts.js?v=2.7"></script>
 </body>
 </html>

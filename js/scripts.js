@@ -149,10 +149,50 @@
     });
   }
 
+  // Mobile Navigation Drawer Toggle
+  const navToggleBtn = document.getElementById('nav-toggle');
+  const primaryNavMenu = document.getElementById('primary-nav-menu');
+
+  if (navToggleBtn && primaryNavMenu) {
+    navToggleBtn.addEventListener('click', () => {
+      const isExpanded = navToggleBtn.getAttribute('aria-expanded') === 'true';
+      navToggleBtn.setAttribute('aria-expanded', !isExpanded);
+      primaryNavMenu.classList.toggle('nav-open');
+    });
+
+    // Close menu when a navigation link is clicked
+    primaryNavMenu.querySelectorAll('.nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        navToggleBtn.setAttribute('aria-expanded', 'false');
+        primaryNavMenu.classList.remove('nav-open');
+      });
+    });
+  }
+
   // ==========================================
   // 2. Interactive Web Audio API Piano Widget
   // ==========================================
   let audioCtx = null;
+  let currentOctaveMultiplier = 1.0; // 1.0 = C4-C5; 0.5 = C3-C4 (Bass)
+
+  const octave3Btn = document.getElementById('octave-3-btn');
+  const octave4Btn = document.getElementById('octave-4-btn');
+
+  if (octave3Btn && octave4Btn) {
+    octave3Btn.addEventListener('click', () => {
+      currentOctaveMultiplier = 0.5;
+      octave3Btn.setAttribute('aria-pressed', 'true');
+      octave4Btn.setAttribute('aria-pressed', 'false');
+      announce('Piano register shifted to Lower Bass Octave C3 to C4');
+    });
+
+    octave4Btn.addEventListener('click', () => {
+      currentOctaveMultiplier = 1.0;
+      octave4Btn.setAttribute('aria-pressed', 'true');
+      octave3Btn.setAttribute('aria-pressed', 'false');
+      announce('Piano register shifted to Standard Octave C4 to C5');
+    });
+  }
 
   function initAudio() {
     if (!audioCtx) {
@@ -187,12 +227,17 @@
     initAudio();
     if (!audioCtx) return;
 
+    // Optional haptic tap on mobile devices (EAA / Sensory ergonomics)
+    if (navigator.vibrate) {
+      try { navigator.vibrate(12); } catch (e) {}
+    }
+
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
 
     // Warm piano-like timbre synthesis
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(freq * currentOctaveMultiplier, audioCtx.currentTime);
 
     // Dynamic ADSR envelope
     const now = audioCtx.currentTime;
@@ -210,11 +255,13 @@
   const pianoKeys = document.querySelectorAll('.piano-key, .piano-key-sharp');
   pianoKeys.forEach((key) => {
     const note = key.getAttribute('data-note');
-    const freq = noteFrequencies[note];
 
     function trigger() {
       key.classList.add('active');
-      playTone(freq);
+      const baseFreq = noteFrequencies[note];
+      if (baseFreq) {
+        playTone(baseFreq);
+      }
       setTimeout(() => key.classList.remove('active'), 200);
     }
 
@@ -267,6 +314,8 @@
   const matcherOutput = document.getElementById('matcher-output');
   const mailtoBtn = document.getElementById('matcher-email-btn');
   const whatsappBtn = document.getElementById('matcher-whatsapp-btn');
+  const copyBtn = document.getElementById('matcher-copy-btn');
+  let currentEnquiryText = '';
 
   if (matcherForm) {
     matcherForm.addEventListener('submit', (e) => {
@@ -279,7 +328,7 @@
       const name = matcherForm.querySelector('input[name="name"]')?.value || '';
       const notes = matcherForm.querySelector('textarea[name="notes"]')?.value || '';
 
-      const summaryText = 
+      currentEnquiryText = 
 `Hello Hannah,
 
 I would like to enquire about piano tuition:
@@ -295,12 +344,12 @@ Thank you!`;
       // Update Buttons
       if (mailtoBtn) {
         const subject = encodeURIComponent(`Piano Tuition Enquiry - ${name || 'New Student'}`);
-        const body = encodeURIComponent(summaryText);
+        const body = encodeURIComponent(currentEnquiryText);
         mailtoBtn.href = `mailto:info@hannahwattsmusic.co.uk?subject=${subject}&body=${body}`;
       }
 
       if (whatsappBtn) {
-        const waText = encodeURIComponent(summaryText);
+        const waText = encodeURIComponent(currentEnquiryText);
         whatsappBtn.href = `https://wa.me/447513885245?text=${waText}`;
       }
 
@@ -308,6 +357,23 @@ Thank you!`;
         matcherOutput.style.display = 'block';
         matcherOutput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
+    });
+  }
+
+  // Copy Enquiry to Clipboard Button
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      if (!currentEnquiryText) return;
+      navigator.clipboard.writeText(currentEnquiryText).then(() => {
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = '✅ Copied to Clipboard!';
+        announce('Enquiry note copied to clipboard');
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+        }, 3000);
+      }).catch(() => {
+        announce('Unable to copy automatically. Please copy text manually.');
+      });
     });
   }
 

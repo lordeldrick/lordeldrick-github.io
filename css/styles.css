@@ -266,6 +266,7 @@
     justify-content: space-between;
     padding-block: var(--space-sm);
     gap: var(--space-md);
+    position: relative;
   }
 
   .nav-brand {
@@ -280,12 +281,62 @@
     min-height: var(--min-target-size);
   }
 
+  .nav-toggle-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: var(--min-target-size);
+    min-width: var(--min-target-size);
+    padding: 6px 12px;
+    background: var(--color-surface);
+    color: var(--color-text-main);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
   .nav-links {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
     list-style: none;
     flex-wrap: wrap;
+  }
+
+  @media (max-width: 820px) {
+    .nav-toggle-btn {
+      display: inline-flex;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-lg);
+      gap: var(--space-xs);
+      z-index: 120;
+    }
+
+    .nav-links.nav-open {
+      display: flex;
+    }
+
+    .nav-link {
+      width: 100%;
+      justify-content: flex-start;
+      padding: var(--space-sm) var(--space-md);
+    }
   }
 
   .nav-link {
@@ -583,13 +634,89 @@
   /* Feature & Service Cards */
   .card {
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-lg);
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .faq-accordion {
+    max-width: 860px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .faq-item {
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-primary);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    background: var(--color-surface-subtle);
+    min-height: var(--min-target-size);
+  }
+
+  .faq-question:hover {
+    background: var(--color-border-subtle);
+  }
+
+  .faq-answer {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 1.05rem;
+    line-height: var(--line-height-body);
+    color: var(--color-text-main);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .piano-octave-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .piano-octave-btn {
+    min-height: var(--min-target-size);
+    padding: 6px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-surface);
+    color: var(--color-text-main);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .piano-octave-btn[aria-pressed="true"] {
+    background: var(--color-primary);
+    color: var(--color-primary-text) !important;
+    border-color: var(--color-primary);
   }
 
   .card-icon {
